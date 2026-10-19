@@ -1,0 +1,535 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pavan MG</title>
+
+    <!-- Fontawsome icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css"
+      integrity="sha512-QeR2VH+lsBE5LSAe1Q5EnTBbe7XTBubt8dG93Y7gidSgdMCr8nVqKcfKAMyN96SV8KDbZVTDXChatu5G2KQGzg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <!-- Simple Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/simple-icons-font@16/font/simple-icons.min.css"
+    />
+
+    <!-- Google fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="assets/CSS/reset.css" />
+    <link rel="stylesheet" href="assets/CSS/base.css" />
+    <link rel="stylesheet" href="assets/CSS/style.css" />
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header" id="home">
+      <div class="mobile-nav">
+        <a class="logo brand-gradient" href="#">
+          {007}
+          <p>pavanmg</p>
+        </a>
+
+        <!-- Hamburger button -->
+        <button
+          type="button"
+          class="hamburger-btn"
+          aria-label="Toggle navigation menu"
+          aria-expanded="false"
+          aria-controls="primary-nav"
+        >
+          <!-- These 3 spans create the visual "hamburger" lines -->
+          <span class="line"></span>
+          <span class="line"></span>
+          <span class="line"></span>
+        </button>
+      </div>
+
+      <!-- Navbar -->
+      <div class="nav-container">
+        <nav class="nav-links" aria-label="Main Navigation">
+          <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#stack">Tech Stack</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </nav>
+
+        <!-- Darkmode toggle -->
+        <div id="darkmode">
+          <input type="checkbox" id="toggleMode" />
+          <label for="toggleMode" class="toggleDark"
+            ><i class="fa-solid fa-moon"></i
+          ></label>
+          <label for="toggleMode" class="toggleLight"
+            ><i class="fa-solid fa-sun"></i
+          ></label>
+        </div>
+
+        <!-- Social links -->
+        <nav class="social-links" aria-label="Social Links">
+          <ul>
+            <li>
+              <a href="#" aria-label="Visit Pavan MG's GitHub profile">
+                <i class="fa-brands fa-square-github"></i>
+              </a>
+            </li>
+            <li>
+              <a href="#" aria-label="Visit Pavan MG's X profile">
+                <i class="fa-brands fa-square-x-twitter"></i>
+              </a>
+            </li>
+            <li>
+              <a href="#" aria-label="Visit Pavan MG's linkedin profile">
+                <i class="fa-brands fa-square-linkedin"></i>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <div class="section-spacing-large"></div>
+
+    <main>
+      <!-- Hero section -->
+      <section class="hero-section">
+        <h1>
+          Hi 👋, <br />
+          My name is <br />
+          <span class="heading-gradient">Pavan MG</span> <br />
+          I build things for web
+        </h1>
+
+        <img
+          class="img-wrapper"
+          src="assets/img/profile_hero_image.png"
+          alt="Profile Image of Pavan smiling in sunglasses"
+        />
+      </section>
+
+      <div class="section-spacing-xl"></div>
+
+      <!-- About section -->
+      <section class="about-section" id="about">
+        <h2>About Me</h2>
+
+        <p>
+          The Generator App is an online tool that helps you to export
+          ready-made templates ready to work as your future website. It helps
+          you to combine slides, panels and other components and export it as a
+          set of static files: HTML/CSS/JS.
+        </p>
+
+        <div class="section-spacing-medium"></div>
+
+        <!-- Work Experience Sub-section -->
+        <section>
+          <h3>Work Experience</h3>
+
+          <article class="card-about">
+            <div class="card-content">
+              <h4>Junior Web Developer</h4>
+              <span>Full Time</span>
+            </div>
+
+            <div class="card-content">
+              <div>
+                <div class="grid-align">
+                  <p>
+                    <i class="fa-regular fa-building"></i> Dr. Rajkumar’s
+                    Learning App
+                  </p>
+                  <p><i class="fa-regular fa-compass"></i> San Francisco, CA</p>
+                </div>
+              </div>
+              <p>
+                <i class="fa-regular fa-calendar-days"></i>
+                <time datetime="2021-09">Sep 2021</time> -
+                <time datetime="2021-12">Dec 2021</time>
+              </p>
+            </div>
+          </article>
+
+          <article class="card-about">
+            <div class="card-content">
+              <h4>Web Development Intern</h4>
+              <span>Internship</span>
+            </div>
+
+            <div class="card-content">
+              <div>
+                <div class="grid-align">
+                  <p>
+                    <i class="fa-regular fa-building"></i> IonPixelz Web
+                    Solutions
+                  </p>
+                  <p><i class="fa-regular fa-compass"></i> Bengaluru</p>
+                </div>
+              </div>
+              <p>
+                <i class="fa-regular fa-calendar-days"></i>
+                <time datetime="2021-09">Sep 2021</time> -
+                <time datetime="2021-12">Dec 2021</time>
+              </p>
+            </div>
+          </article>
+
+          <article class="card-about">
+            <div class="card-content">
+              <h4>SEO / SEM Specialist</h4>
+              <span>Internship</span>
+            </div>
+
+            <div class="card-content">
+              <div>
+                <div class="grid-align">
+                  <p><i class="fa-regular fa-building"></i> HAAPS</p>
+                  <p><i class="fa-regular fa-compass"></i> Bengaluru</p>
+                </div>
+              </div>
+              <p>
+                <i class="fa-regular fa-calendar-days"></i>
+                <time datetime="2021-09">Sep 2021</time> -
+                <time datetime="2021-12">Dec 2021</time>
+              </p>
+            </div>
+          </article>
+        </section>
+
+        <div class="section-spacing-medium"></div>
+
+        <!-- Education Sub-section -->
+        <section>
+          <h3>Education</h3>
+
+          <article class="card-about">
+            <div class="card-content">
+              <h4>Bachelor in Electronics & Communication</h4>
+              <span>Full Time</span>
+            </div>
+
+            <div class="card-content">
+              <p>
+                <i class="fa-regular fa-building"></i> Bangalore Instutute of
+                Technology
+              </p>
+
+              <p>
+                <i class="fa-regular fa-calendar-days"></i>
+                <time datetime="2015-08">Aug 2015</time> -
+                <time datetime="2020-12">Dec 2020</time>
+              </p>
+            </div>
+          </article>
+        </section>
+      </section>
+
+      <div class="section-spacing-xl"></div>
+
+      <!-- Stack section -->
+      <section class="myTeckStack-section" id="stack">
+        <h2>My Tech Stack</h2>
+        <p>Technologies I’ve been working with recently</p>
+
+        <div class="section-spacing-medium"></div>
+        <div class="section-spacing-medium"></div>
+
+        <div class="mystack-gallery">
+          <svg class="icon">
+            <use href="icons.svg#icon-html-icon"></use>
+          </svg>
+          <svg class="icon">
+            <use href="icons.svg#icon-css-icon"></use>
+          </svg>
+          <svg class="icon">
+            <use href="icons.svg#icon-javascript-icon"></use>
+          </svg>
+          <svg class="icon">
+            <use href="icons.svg#icon-react-icon"></use>
+          </svg>
+          <svg class="icon">
+            <use href="icons.svg#icon-tailwind-icon"></use>
+          </svg>
+          <svg class="icon">
+            <use href="icons.svg#icon-git-icon"></use>
+          </svg>
+          <svg class="icon">
+            <use href="icons.svg#icon-postgresql-icon"></use>
+          </svg>
+          <svg class="icon">
+            <use href="icons.svg#icon-figma-icon"></use>
+          </svg>
+          <svg class="icon">
+            <use href="icons.svg#icon-vscode-icon"></use>
+          </svg>
+          <svg class="icon">
+            <use href="icons.svg#icon-node-icon"></use>
+          </svg>
+          <svg class="icon light-icon">
+            <use href="icons.svg#icon-greensock-icon"></use>
+          </svg>
+          <svg class="icon light-icon">
+            <use href="icons.svg#icon-github-icon"></use>
+          </svg>
+        </div>
+      </section>
+
+      <div class="section-spacing-xl"></div>
+
+      <!-- Projects section -->
+      <section class="projects-section" id="projects">
+        <h2>Projects</h2>
+        <p>Things I’ve built so far</p>
+
+        <div class="section-spacing-large"></div>
+
+        <div class="article-cards">
+          <article>
+            <figure>
+              <img
+                src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1364&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                alt=""
+              />
+            </figure>
+
+            <div class="article-content">
+              <header>
+                <h3>Project Tile goes here</h3>
+              </header>
+
+              <p>
+                This is sample project description random things are here in
+                description This is sample project lorem ipsum generator for
+                dummy content. making this one a little longer to see if the
+                others follow the size so all the cards looks equally sized no
+                matter the content in each card.
+              </p>
+
+              <p class="card-stack"><span>Tech Stack: </span>html, css, java</p>
+
+              <footer>
+                <div>
+                  <i class="fa-solid fa-link"></i>
+                  <a href="">Live Preview</a>
+                </div>
+                <div>
+                  <i class="fa-brands fa-github"></i>
+                  <a href="#">View Code</a>
+                </div>
+              </footer>
+            </div>
+          </article>
+          <article>
+            <figure>
+              <img
+                src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1364&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                alt=""
+              />
+            </figure>
+
+            <div class="article-content">
+              <header>
+                <h3>Project Tile goes here</h3>
+              </header>
+
+              <p>
+                This is sample project description random things are here in
+                description This is sample project lorem ipsum generator for
+                dummy content
+              </p>
+
+              <p class="card-stack"><span>Tech Stack: </span>html, css, java</p>
+
+              <footer>
+                <div>
+                  <i class="fa-solid fa-link"></i>
+                  <a href="">Live Preview</a>
+                </div>
+                <div>
+                  <i class="fa-brands fa-github"></i>
+                  <a href="#">View Code</a>
+                </div>
+              </footer>
+            </div>
+          </article>
+          <article>
+            <figure>
+              <img
+                src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1364&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                alt=""
+              />
+            </figure>
+
+            <div class="article-content">
+              <header>
+                <h3>Project Tile goes here</h3>
+              </header>
+
+              <p>
+                This is sample project description random things are here in
+                description This is sample project lorem ipsum generator for
+                dummy content
+              </p>
+
+              <p class="card-stack"><span>Tech Stack: </span>html, css, java</p>
+
+              <footer>
+                <div>
+                  <i class="fa-solid fa-link"></i>
+                  <a href="">Live Preview</a>
+                </div>
+                <div>
+                  <i class="fa-brands fa-github"></i>
+                  <a href="#">View Code</a>
+                </div>
+              </footer>
+            </div>
+          </article>
+          <article>
+            <figure>
+              <img
+                src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1364&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                alt=""
+              />
+            </figure>
+
+            <div class="article-content">
+              <header>
+                <h3>Project Tile goes here</h3>
+              </header>
+
+              <p>
+                This is sample project description random things are here in
+                description This is sample project lorem ipsum generator for
+                dummy content
+              </p>
+
+              <p class="card-stack"><span>Tech Stack: </span>html, css, java</p>
+
+              <footer>
+                <div>
+                  <i class="fa-solid fa-link"></i>
+                  <a href="">Live Preview</a>
+                </div>
+                <div>
+                  <i class="fa-brands fa-github"></i>
+                  <a href="#">View Code</a>
+                </div>
+              </footer>
+            </div>
+          </article>
+          <article>
+            <figure>
+              <img
+                src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1364&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                alt=""
+              />
+            </figure>
+
+            <div class="article-content">
+              <header>
+                <h3>Project Tile goes here</h3>
+              </header>
+
+              <p>
+                This is sample project description random things are here in
+                description This is sample project lorem ipsum generator for
+                dummy content
+              </p>
+
+              <p class="card-stack"><span>Tech Stack: </span>html, css, java</p>
+
+              <footer>
+                <div>
+                  <i class="fa-solid fa-link"></i>
+                  <a href="">Live Preview</a>
+                </div>
+                <div>
+                  <i class="fa-brands fa-github"></i>
+                  <a href="#">View Code</a>
+                </div>
+              </footer>
+            </div>
+          </article>
+          <article>
+            <figure>
+              <img
+                src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1364&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                alt=""
+              />
+            </figure>
+
+            <div class="article-content">
+              <header>
+                <h3>Project Tile goes here</h3>
+              </header>
+
+              <p>
+                This is sample project description random things are here in
+                description This is sample project lorem ipsum generator for
+                dummy content
+              </p>
+
+              <p class="card-stack"><span>Tech Stack: </span>html, css, java</p>
+
+              <footer>
+                <div>
+                  <i class="fa-solid fa-link"></i>
+                  <a href="">Live Preview</a>
+                </div>
+                <div>
+                  <i class="fa-brands fa-github"></i>
+                  <a href="#">View Code</a>
+                </div>
+              </footer>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <div class="section-spacing-xl"></div>
+
+      <!-- Contact Section -->
+      <section class="contact-section" id="contact">
+        <h2>For any questions email us:</h2>
+        <address>
+          <a class="heading-gradient" href="mailto:hi@pavanmg.in"
+            >hi@pavanmg.in</a
+          >
+        </address>
+      </section>
+
+      <div class="section-spacing-xl"></div>
+    </main>
+
+    <div class="section-spacing-large"></div>
+    <!-- Footer -->
+    <footer>
+      <p>
+        Designed and built by
+        <a class="heading-gradient" href="/">Pavan MG</a> with
+        <span class="heading-gradient">Love</span> &
+        <span class="heading-gradient">Coffee</span>
+      </p>
+    </footer>
+
+    <div class="section-spacing-medium"></div>
+  </body>
+</html>

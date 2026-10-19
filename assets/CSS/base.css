@@ -1,0 +1,106 @@
+/* Base CSS */
+:root {
+  /* Colors */
+
+  color-scheme: light;
+  --bg: light-dark(#ffffff, #111111);
+  --bg-cards: light-dark(#ffffff, #363636);
+
+  --color-text-white: light-dark (#fff, #e3e3e3);
+  --color-text-muted: light-dark(#666666, #e3e3e3);
+  --color-text-muted-light: light-dark(#707070, #e3e3e3);
+  --color-text-black: light-dark(#111111, #e3e3e3);
+
+  --color-brand1: #008ad5;
+  --color-brand2: #b80072;
+
+  --color-text-success: light-dark(#005f09, #4ade80);
+  --color-text-success-muted: light-dark(#d7ffe0, #14532d);
+
+  /* Gradients */
+  --gradient-brand: linear-gradient(
+    90deg,
+    var(--color-brand1),
+    var(--color-brand2)
+  );
+  --gradient-border: linear-gradient(
+    0deg,
+    var(--color-brand1),
+    var(--color-brand2)
+  );
+
+  /* Fonts */
+  --font-size-text: clamp(8px, -0.1429rem + 2.2857vw, 16px);
+  --font-size-heading: clamp(14px, 0.5625rem + 1.6667vw, 24px);
+
+  /* Image size */
+  --img-width: clamp(260px, 226px + 11.333vw, 300px);
+
+  /* Layouts */
+  --main-container: 999px;
+
+  /* Spacing */
+  --small-spacing: 16px;
+  --main-spacing: 24px;
+  --section-spacing-medium: clamp(25px, 12.5px + 4.1667vw, 50px);
+  --section-spacing-large: clamp(50px, 25px + 8.333vw, 100px);
+  --section-spacing-xl: clamp(150px, 100px + 16.6667vw, 250px);
+}
+
+/* Darkmode toggle */
+html:has(#toggleMode:checked) {
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Body */
+body {
+  color: var(--color-text-black);
+  background: var(--bg);
+  font-family: "Poppins", sans-serif;
+  padding: var(--main-spacing);
+}
+
+/* 
+===========================================
+Utilities
+===========================================
+*/
+
+.brand-gradient {
+  background-image: var(--gradient-brand);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.heading-gradient {
+  background-image: var(--gradient-brand);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.img-wrapper {
+  display: inline-block;
+  padding: 9px;
+  background: var(--gradient-border);
+  border-radius: 50%;
+}
+
+.section-spacing-medium {
+  height: var(--section-spacing-medium);
+}
+
+.section-spacing-large {
+  height: var(--section-spacing-large);
+}
+
+.section-spacing-xl {
+  height: var(--section-spacing-xl);
+}
