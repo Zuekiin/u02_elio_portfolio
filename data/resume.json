@@ -1,0 +1,94 @@
+{
+  "meta": {
+    "name": "Elio"
+  },
+  "hero": {
+    "name": "Zuekiin",
+    "profileImage": "assets/img/profile_hero_image.png",
+    "profileImageAlt": "Profile Image of Elio"
+  },
+  "socialLinks": [
+    {
+      "label": "GitHub",
+      "url": "https://github.com/Zuekiin",
+      "icon": "fa-brands fa-square-github",
+      "ariaLabel": "Visit Elio's GitHub profile"
+    },
+    {
+      "label": "LinkedIn",
+      "url": "https://www.linkedin.com/in/b3rgc3/",
+      "icon": "fa-brands fa-square-linkedin",
+      "ariaLabel": "Visit Elio's LinkedIn profile"
+    }
+  ],
+  "about": {
+    "summary": "A competent communicator and an avid advocate for the users, with the ability to explain complex flows into a clear understandable format. With experience in both frontend development and product design, I always strive to prioritize centralized user needs. This ensures user-centric solutions to effectively support business goals."
+  },
+  "experience": [
+    {
+      "role": "UX Designer",
+      "company": "Inselo",
+      "location": "Stockholm",
+      "type": "Full Time",
+      "startDate": "2022",
+      "endDate": "2024",
+      "startDateTime": "2022",
+      "endDateTime": "2024"
+    },
+    {
+      "role": "UX Designer / Content Creator",
+      "company": "Bototal",
+      "location": "Stockholm",
+      "type": "Full Time",
+      "startDate": "2018",
+      "endDate": "2022",
+      "startDateTime": "2018",
+      "endDateTime": "2022"
+    },
+    {
+      "role": "Project Coordinator",
+      "company": "Lernia AB",
+      "location": "Stockholm",
+      "type": "Full Time",
+      "startDate": "2011",
+      "endDate": "2018",
+      "startDateTime": "2011",
+      "endDateTime": "2018"
+    }
+  ],
+  "education": [
+    {
+      "degree": "Frontend Developer",
+      "institution": "Lexcion IT Proffs",
+      "location": "Stockholm",
+      "type": "Full Time",
+      "startDate": "2024",
+      "endDate": "2025",
+      "startDateTime": "2024",
+      "endDateTime": "2025",
+      "description": "HTML, CSS, JavaScript, Typescript, React JS, Next JS, Agile Methods"
+    },
+    {
+      "degree": "The Social Studies Program",
+      "institution": "FKC Gymnasium",
+      "location": "Stockholm",
+      "type": "Full Time",
+      "startDate": "2001",
+      "endDate": "2004",
+      "startDateTime": "2001",
+      "endDateTime": "2004",
+      "description": "Majoring in social studies and media/aesthetics"
+    },
+    {
+      "degree": "Various Dev Bootcamps",
+      "institution": "Self-directed",
+      "location": "",
+      "type": "Part Time",
+      "startDate": "2006",
+      "endDate": "2015",
+      "startDateTime": "2006",
+      "endDateTime": "2015",
+      "description": "UX Design Essentials, UX Design Essentials, UX Design Advanced, Web Developer, Modern JavaScript, React/React Native"
+    }
+  ]
+}
