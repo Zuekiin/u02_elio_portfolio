@@ -2,10 +2,15 @@
 
 /* Header */
 .header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: var(--bg);
   max-width: var(--main-container);
   margin-inline: auto;
   display: flex;
   justify-content: space-between;
+  padding: 1.5rem 2rem;
 
   /* logo */
   .logo {

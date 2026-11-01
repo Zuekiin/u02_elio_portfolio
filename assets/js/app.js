@@ -1,3 +1,21 @@
+// Switch light/dark mode
+
+if (localStorage.getItem("theme") === "dark") {
+  document.documentElement.classList.add("dark-mode");
+}
+
+const toggle = document.getElementById("toggleMode");
+
+if (toggle) {
+  toggle.checked = document.documentElement.classList.contains("dark-mode");
+
+  toggle.addEventListener("change", () => {
+    const isDark = toggle.checked;
+    document.documentElement.classList.toggle("dark-mode", isDark);
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+  });
+}
+
 // Resume data
 fetch("./data/resume.json")
   .then((res) => res.json())
@@ -43,7 +61,7 @@ function renderAbout(about) {
 }
 
 function renderExperience(experience) {
-  const container = document.querySelector("#about section");
+  const container = document.querySelector("#about .experience-list");
   if (!container) return;
 
   container.innerHTML = experience
