@@ -1,5 +1,27 @@
-// Switch light/dark mode
+// Interactive nav
 
+function showhide() {
+  const navBtn = document.querySelector(".hamburger-btn");
+  const navContainer = document.querySelector(".nav-container");
+
+  navBtn.addEventListener("click", () => {
+    const isOpen = navContainer.classList.toggle("is-open");
+    navBtn.classList.toggle("is-open", isOpen);
+    navBtn.setAttribute("aria-expanded", isOpen);
+  });
+
+  navContainer.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => {
+      navContainer.classList.remove("is-open");
+      navBtn.classList.remove("is-open");
+      navBtn.setAttribute("aria-expanded", "false");
+    });
+  });
+}
+
+showhide();
+
+// Switch light/dark mode
 if (localStorage.getItem("theme") === "dark") {
   document.documentElement.classList.add("dark-mode");
 }
