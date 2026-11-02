@@ -10,7 +10,7 @@
   margin-inline: auto;
   display: flex;
   justify-content: space-between;
-  padding: 1.5rem 2rem;
+  padding: 1.5rem;
 
   /* logo */
   .logo {
@@ -455,4 +455,54 @@ footer {
   @media screen and (max-width: 921px) {
     display: block;
   }
+}
+
+/* Popup modal */
+.modal[hidden] {
+  display: none;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+}
+
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(183, 182, 182, 0.496);
+}
+
+.modal-content {
+  position: relative;
+  background: var(--bg);
+  color: var(--color-text-black);
+  padding: 1.5rem;
+  border-radius: 8px;
+  max-width: 420px;
+  width: calc(100% - 2rem);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+.modal-content h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.2rem;
+}
+
+.modal-hint {
+  color: var(--color-text-muted-light);
+  font-size: 0.9rem;
+}
+
+.modal-btn {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  background: var(--color-text-black);
+  color: var(--bg);
+  cursor: pointer;
 }
