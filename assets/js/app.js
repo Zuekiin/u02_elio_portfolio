@@ -62,7 +62,7 @@ async function fetchProjects() {
 
   console.log("Cache miss — fetching from GitHub");
   try {
-    const res = await fetch(`https://api.github.com/users/${usernam}/repos`);
+    const res = await fetch(`https://api.github.com/users/${username}/repos`);
 
     if (!res.ok) {
       // 403 / rate limited, fall back to stale cache if any
