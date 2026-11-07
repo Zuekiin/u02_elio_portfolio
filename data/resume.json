@@ -5,7 +5,9 @@
   "hero": {
     "name": "Zuekiin",
     "profileImage": "assets/img/profile_hero_image.png",
-    "profileImageAlt": "Profile Image of Elio"
+    "profileImageAlt": "Profile Image of Elio",
+    "profileImageWidth": "564",
+    "profileImageHeight": "603"
   },
   "socialLinks": [
     {

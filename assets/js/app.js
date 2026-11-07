@@ -62,7 +62,7 @@ async function fetchProjects() {
 
   console.log("Cache miss — fetching from GitHub");
   try {
-    const res = await fetch(`https://api.github.com/users/${username}/repos`);
+    const res = await fetch(`https://api.github.com/users/${usernam}/repos`);
 
     if (!res.ok) {
       // 403 / rate limited, fall back to stale cache if any
@@ -196,7 +196,7 @@ function renderCards(projects) {
 
     article.innerHTML = `
       <figure>
-        <img src="${IMAGE_URL}" alt="${project.name}" />
+        <img src="${IMAGE_URL}" width="564" height="603" alt="${project.name}" />
       </figure>
 
       <div class="article-content">
@@ -287,6 +287,8 @@ function renderHero(hero) {
   const img = document.querySelector(".hero-section .img-wrapper");
   img.src = hero.profileImage;
   img.alt = hero.profileImageAlt;
+  img.width = hero.profileImageWidth;
+  img.height = hero.profileImageHeight;
 }
 
 function renderSocialLinks(links) {

@@ -3,31 +3,45 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Explore my portfolio showcasing modern web development projects, creative designs, and digital solutions. Let's build something amazing together!"
+    />
     <title>Elio Portfolio</title>
 
-    <!-- Fontawsome icons -->
+    <!-- 1. Speed up network connections (Preconnect) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+
+    <!-- 2. Load external fonts and icons asynchronously (Non-render-blocking) -->
+    <!-- Font Awesome 7.3.1 -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css"
       integrity="sha512-QeR2VH+lsBE5LSAe1Q5EnTBbe7XTBubt8dG93Y7gidSgdMCr8nVqKcfKAMyN96SV8KDbZVTDXChatu5G2KQGzg=="
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
+      media="print"
+      onload="this.media = 'all'"
     />
 
-    <!-- Simple Icons -->
+    <!-- Simple Icons v16 -->
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/simple-icons-font@16/font/simple-icons.min.css"
+      media="print"
+      onload="this.media = 'all'"
     />
 
-    <!-- Google fonts -->
+    <!-- Google Fonts (Inconsolata & Poppins with optimized weights) -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@200;300;400;500;600;700;800;900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;500;700&family=Poppins:wght@400;500;700&display=swap"
       rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
-      rel="stylesheet"
+      type="text/css"
+      media="print"
+      onload="this.media = 'all'"
     />
 
     <!-- CSS Files -->
@@ -123,7 +137,7 @@
           I build things for web
         </h1>
 
-        <img class="img-wrapper" src="" alt="" />
+        <img class="img-wrapper" src="" width="564" height="603" alt="" />
       </section>
 
       <div class="section-spacing-xl"></div>
@@ -307,208 +321,7 @@
 
         <div class="section-spacing-large"></div>
 
-        <div class="article-cards" id="article-cards">
-          <article>
-            <figure>
-              <img
-                src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1364&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                alt=""
-              />
-            </figure>
-
-            <div class="article-content">
-              <header>
-                <h3>Project Tile goes here</h3>
-              </header>
-
-              <p>
-                This is sample project description random things are here in
-                description This is sample project lorem ipsum generator for
-                dummy content. making this one a little longer to see if the
-                others follow the size so all the cards looks equally sized no
-                matter the content in each card.
-              </p>
-
-              <p class="card-stack"><span>Tech Stack: </span>html, css, java</p>
-
-              <footer>
-                <div>
-                  <i class="fa-solid fa-link"></i>
-                  <a href="">Live Preview</a>
-                </div>
-                <div>
-                  <i class="fa-brands fa-github"></i>
-                  <a href="#">View Code</a>
-                </div>
-              </footer>
-            </div>
-          </article>
-          <article>
-            <figure>
-              <img
-                src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1364&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                alt=""
-              />
-            </figure>
-
-            <div class="article-content">
-              <header>
-                <h3>Project Tile goes here</h3>
-              </header>
-
-              <p>
-                This is sample project description random things are here in
-                description This is sample project lorem ipsum generator for
-                dummy content
-              </p>
-
-              <p class="card-stack"><span>Tech Stack: </span>html, css, java</p>
-
-              <footer>
-                <div>
-                  <i class="fa-solid fa-link"></i>
-                  <a href="">Live Preview</a>
-                </div>
-                <div>
-                  <i class="fa-brands fa-github"></i>
-                  <a href="#">View Code</a>
-                </div>
-              </footer>
-            </div>
-          </article>
-          <article>
-            <figure>
-              <img
-                src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1364&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                alt=""
-              />
-            </figure>
-
-            <div class="article-content">
-              <header>
-                <h3>Project Tile goes here</h3>
-              </header>
-
-              <p>
-                This is sample project description random things are here in
-                description This is sample project lorem ipsum generator for
-                dummy content
-              </p>
-
-              <p class="card-stack"><span>Tech Stack: </span>html, css, java</p>
-
-              <footer>
-                <div>
-                  <i class="fa-solid fa-link"></i>
-                  <a href="">Live Preview</a>
-                </div>
-                <div>
-                  <i class="fa-brands fa-github"></i>
-                  <a href="#">View Code</a>
-                </div>
-              </footer>
-            </div>
-          </article>
-          <article>
-            <figure>
-              <img
-                src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1364&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                alt=""
-              />
-            </figure>
-
-            <div class="article-content">
-              <header>
-                <h3>Project Tile goes here</h3>
-              </header>
-
-              <p>
-                This is sample project description random things are here in
-                description This is sample project lorem ipsum generator for
-                dummy content
-              </p>
-
-              <p class="card-stack"><span>Tech Stack: </span>html, css, java</p>
-
-              <footer>
-                <div>
-                  <i class="fa-solid fa-link"></i>
-                  <a href="">Live Preview</a>
-                </div>
-                <div>
-                  <i class="fa-brands fa-github"></i>
-                  <a href="#">View Code</a>
-                </div>
-              </footer>
-            </div>
-          </article>
-          <article>
-            <figure>
-              <img
-                src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1364&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                alt=""
-              />
-            </figure>
-
-            <div class="article-content">
-              <header>
-                <h3>Project Tile goes here</h3>
-              </header>
-
-              <p>
-                This is sample project description random things are here in
-                description This is sample project lorem ipsum generator for
-                dummy content
-              </p>
-
-              <p class="card-stack"><span>Tech Stack: </span>html, css, java</p>
-
-              <footer>
-                <div>
-                  <i class="fa-solid fa-link"></i>
-                  <a href="">Live Preview</a>
-                </div>
-                <div>
-                  <i class="fa-brands fa-github"></i>
-                  <a href="#">View Code</a>
-                </div>
-              </footer>
-            </div>
-          </article>
-          <article>
-            <figure>
-              <img
-                src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1364&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                alt=""
-              />
-            </figure>
-
-            <div class="article-content">
-              <header>
-                <h3>Project Tile goes here</h3>
-              </header>
-
-              <p>
-                This is sample project description random things are here in
-                description This is sample project lorem ipsum generator for
-                dummy content
-              </p>
-
-              <p class="card-stack"><span>Tech Stack: </span>html, css, java</p>
-
-              <footer>
-                <div>
-                  <i class="fa-solid fa-link"></i>
-                  <a href="">Live Preview</a>
-                </div>
-                <div>
-                  <i class="fa-brands fa-github"></i>
-                  <a href="#">View Code</a>
-                </div>
-              </footer>
-            </div>
-          </article>
-        </div>
+        <div class="article-cards" id="article-cards"></div>
       </section>
 
       <div class="section-spacing-xl"></div>

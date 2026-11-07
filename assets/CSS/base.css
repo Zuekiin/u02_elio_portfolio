@@ -1,4 +1,31 @@
 /* Base CSS */
+
+/* FONT AWESOME */
+
+@font-face {
+  font-family: "Font Awesome 5 Free";
+  font-style: normal;
+  font-weight: 900;
+  font-display: block;
+  src: url("https://cloudflare.com") format("woff2");
+}
+
+@font-face {
+  font-family: "Font Awesome 5 Free";
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url("https://cloudflare.com") format("woff2");
+}
+
+@font-face {
+  font-family: "Font Awesome 5 Brands";
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url("https://cloudflare.com") format("woff2");
+}
+
 :root {
   /* Colors */
 
