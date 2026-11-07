@@ -1,3 +1,4 @@
+// Fetch github projects
 const username = "zuekiin";
 const wanted = [
   "weather_app_react",
@@ -11,12 +12,6 @@ const wanted = [
 const CACHE_KEY = "portfolio_repos";
 const TTL = 1000 * 60 * 60 * 6;
 
-const IMAGE_URL =
-  "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1364&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
-
-// ---------------------------------------------------------------
-// Cache
-// ---------------------------------------------------------------
 function readCache() {
   try {
     const raw = localStorage.getItem(CACHE_KEY);
@@ -37,31 +32,64 @@ function writeCache(data) {
   }
 }
 
-// Modal
-function showErrorModal() {
-  const modal = document.getElementById("error-modal");
-  if (!modal) return;
-  modal.hidden = false;
+// Fetch
+async function fetchProjects() {
+  const cached = readCache();
+  if (cached && Date.now() - cached.ts < TTL) {
+    console.log("Cache hit — using localStorage");
+    return cached.data;
+  }
 
-  const close = () => {
-    modal.hidden = true;
-    document.removeEventListener("keydown", onKey);
-  };
-  const onKey = (e) => {
-    if (e.key === "Escape") close();
-  };
+  console.log("Cache miss — fetching from GitHub");
+  try {
+    const res = await fetch(`https://api.github.com/users/${username}/repos`);
 
-  modal.querySelectorAll("[data-close]").forEach((el) => {
-    el.addEventListener("click", close, { once: true });
-  });
-  document.addEventListener("keydown", onKey);
+    if (!res.ok) {
+      // 403 / rate limited, fall back to stale cache if any
+      if (cached) {
+        console.warn(`Fetch failed (${res.status}) — using stale cache`);
+        return cached.data;
+      }
+      throw new Error(`GitHub API: ${res.status}`);
+    }
+
+    const repos = await res.json();
+    const selected = repos.filter((r) => wanted.includes(r.name));
+
+    if (selected.length === 0) {
+      throw new Error("GitHub returned no matching repos");
+    }
+
+    const langResults = await Promise.all(
+      selected.map((repo) =>
+        fetch(`https://api.github.com/repos/${username}/${repo.name}/languages`)
+          .then((r) => (r.ok ? r.json() : {}))
+          .catch(() => ({})),
+      ),
+    );
+
+    const data = selected.map((repo, i) => ({
+      name: repo.name,
+      url: repo.html_url,
+      description: repo.description || "No description",
+      languages: Object.keys(langResults[i]),
+    }));
+
+    writeCache(data);
+    return data;
+  } catch (err) {
+    // Network error, stale cache fallback
+    if (cached) {
+      console.warn("Fetch error — using stale cache", err);
+      return cached.data;
+    }
+    // No cache at all, tell the user
+    console.warn("Fetch failed and no cache:", err);
+    showErrorModal();
+    throw err;
+  }
 }
 
-function prettifyName(name) {
-  return name.replace(/[-_]+/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
-}
-
-// Render projects
 function renderErrorCards(count = 6) {
   const container = document.getElementById("article-cards");
   if (!container) return;
@@ -103,11 +131,39 @@ function renderErrorCards(count = 6) {
   }
 }
 
+// Popup Modal
+function showErrorModal() {
+  const modal = document.getElementById("error-modal");
+  if (!modal) return;
+  modal.hidden = false;
+
+  const close = () => {
+    modal.hidden = true;
+    document.removeEventListener("keydown", onKey);
+  };
+  const onKey = (e) => {
+    if (e.key === "Escape") close();
+  };
+
+  modal.querySelectorAll("[data-close]").forEach((el) => {
+    el.addEventListener("click", close, { once: true });
+  });
+  document.addEventListener("keydown", onKey);
+}
+
+function prettifyName(name) {
+  return name.replace(/[-_]+/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
+// Render github projects
+const IMAGE_URL =
+  "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1364&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+
 function renderCards(projects) {
   const container = document.getElementById("article-cards");
   if (!container) return;
 
-  container.innerHTML = "";
+  container.innerHTML = ""; // clear before rendering
 
   projects.forEach((project) => {
     const article = document.createElement("article");
@@ -145,16 +201,53 @@ function renderCards(projects) {
   });
 }
 
-// Render resume json
+// Interactive nav
+function showhide() {
+  const navBtn = document.querySelector(".hamburger-btn");
+  const navContainer = document.querySelector(".nav-container");
+
+  navBtn.addEventListener("click", () => {
+    const isOpen = navContainer.classList.toggle("is-open");
+    navBtn.classList.toggle("is-open", isOpen);
+    navBtn.setAttribute("aria-expanded", String(isOpen));
+  });
+
+  navContainer.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => {
+      navContainer.classList.remove("is-open");
+      navBtn.classList.remove("is-open");
+      navBtn.setAttribute("aria-expanded", "false");
+    });
+  });
+}
+
+showhide();
+
+// Switch light/dark mode
+if (localStorage.getItem("theme") === "dark") {
+  document.documentElement.classList.add("dark-mode");
+}
+
+const toggle = document.getElementById("toggleMode");
+
+if (toggle) {
+  toggle.checked = document.documentElement.classList.contains("dark-mode");
+
+  toggle.addEventListener("change", () => {
+    const isDark = toggle.checked;
+    document.documentElement.classList.toggle("dark-mode", isDark);
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+  });
+}
+
+// Resume data
 function renderHero(hero) {
   const el = document.querySelector(".hero-section span");
-  if (!el) return;
   el.innerHTML = `
   <span class="heading-gradient">${hero.name}</span>
   `;
 
   const img = document.querySelector(".hero-section .img-wrapper");
-  if (!img) return;
   img.src = hero.profileImage;
   img.alt = hero.profileImageAlt;
   img.width = hero.profileImageWidth;
@@ -163,7 +256,6 @@ function renderHero(hero) {
 
 function renderSocialLinks(links) {
   const ul = document.querySelector(".social-links ul");
-  if (!ul) return;
   ul.innerHTML = links
     .map(
       (link) =>
@@ -180,10 +272,7 @@ function renderSocialLinks(links) {
 
 function renderAbout(about) {
   const section = document.querySelector("#about");
-  if (!section) return;
-  const p = section.querySelector("p");
-  if (!p) return;
-  p.textContent = about.summary;
+  section.querySelector("p").textContent = about.summary;
 }
 
 function renderExperience(experience) {
@@ -245,117 +334,7 @@ function renderEducation(education) {
     .join("");
 }
 
-// Get GitHub-projects
-async function fetchProjects() {
-  const cached = readCache();
-  if (cached && Date.now() - cached.ts < TTL) {
-    console.log("Cache hit — using localStorage");
-    return cached.data;
-  }
-
-  console.log("Cache miss — fetching from GitHub");
-  try {
-    const res = await fetch(`https://api.github.com/users/${username}/repos`);
-
-    if (!res.ok) {
-      if (cached) {
-        console.warn(`Fetch failed (${res.status}) — using stale cache`);
-        return cached.data;
-      }
-      throw new Error(`GitHub API: ${res.status}`);
-    }
-
-    const repos = await res.json();
-    const selected = repos.filter((r) => wanted.includes(r.name));
-
-    if (selected.length === 0) {
-      throw new Error("GitHub returned no matching repos");
-    }
-
-    const langResults = await Promise.all(
-      selected.map((repo) =>
-        fetch(`https://api.github.com/repos/${username}/${repo.name}/languages`)
-          .then((r) => (r.ok ? r.json() : {}))
-          .catch(() => ({})),
-      ),
-    );
-
-    const data = selected.map((repo, i) => ({
-      name: repo.name,
-      url: repo.html_url,
-      description: repo.description || "No description",
-      languages: Object.keys(langResults[i]),
-    }));
-
-    writeCache(data);
-    return data;
-  } catch (err) {
-    if (cached) {
-      console.warn("Fetch error — using stale cache", err);
-      return cached.data;
-    }
-    console.warn("Fetch failed and no cache:", err);
-    showErrorModal();
-    throw err;
-  }
-}
-
-// Get resume json
-function fetchResume() {
-  return fetch("./data/resume.json")
-    .then((res) => {
-      if (!res.ok) throw new Error(`resume.json: ${res.status}`);
-      return res.json();
-    })
-    .then((data) => {
-      renderHero(data.hero);
-      renderSocialLinks(data.socialLinks);
-      renderAbout(data.about);
-      renderExperience(data.experience);
-      renderEducation(data.education);
-    })
-    .catch((err) => console.error("Failed to load resume:", err));
-}
-
-// Event menu and theme
-function showhide() {
-  const navBtn = document.querySelector(".hamburger-btn");
-  const navContainer = document.querySelector(".nav-container");
-  if (!navBtn || !navContainer) return;
-
-  navBtn.addEventListener("click", () => {
-    const isOpen = navContainer.classList.toggle("is-open");
-    navBtn.classList.toggle("is-open", isOpen);
-    navBtn.setAttribute("aria-expanded", String(isOpen));
-  });
-
-  navContainer.querySelectorAll("a").forEach((link) => {
-    link.addEventListener("click", () => {
-      navContainer.classList.remove("is-open");
-      navBtn.classList.remove("is-open");
-      navBtn.setAttribute("aria-expanded", "false");
-    });
-  });
-}
-
-function initThemeToggle() {
-  if (localStorage.getItem("theme") === "dark") {
-    document.documentElement.classList.add("dark-mode");
-  }
-
-  const toggle = document.getElementById("toggleMode");
-  if (!toggle) return;
-
-  toggle.checked = document.documentElement.classList.contains("dark-mode");
-
-  toggle.addEventListener("change", () => {
-    const isDark = toggle.checked;
-    document.documentElement.classList.toggle("dark-mode", isDark);
-    localStorage.setItem("theme", isDark ? "dark" : "light");
-  });
-}
-
-// Scroll-spy
+// Scroll spy update URL hash to the section in view
 const sections = document.querySelectorAll("section[id]");
 
 function setActive(id) {
@@ -367,9 +346,7 @@ function setActive(id) {
   });
 }
 
-function initScrollSpy() {
-  if (!sections.length) return;
-
+if (sections.length) {
   const observer = new IntersectionObserver(
     (entries) => {
       const visible = entries
@@ -388,6 +365,7 @@ function initScrollSpy() {
 
   sections.forEach((s) => observer.observe(s));
 
+  // Force #home when scrolled near the top
   window.addEventListener(
     "scroll",
     () => {
@@ -396,24 +374,30 @@ function initScrollSpy() {
     { passive: true },
   );
 
+  // Set correct state on first load (e.g. reloading at #about)
   if (window.scrollY < 100) setActive("home");
 }
 
-// Start
-document.addEventListener("DOMContentLoaded", () => {
-  showhide();
-  initThemeToggle();
-  initScrollSpy();
+// ---------------------------------------------------------------
+// Start – alla anrop ligger nu sist, efter alla definitioner
+// ---------------------------------------------------------------
+fetchProjects()
+  .then((data) => {
+    console.log("Got data:", data);
+    renderCards(data);
+  })
+  .catch((err) => {
+    console.error("Failed:", err);
+    renderErrorCards(wanted.length);
+  });
 
-  fetchProjects()
-    .then((data) => {
-      console.log("Got data:", data);
-      renderCards(data);
-    })
-    .catch((err) => {
-      console.error("Failed:", err);
-      renderErrorCards(wanted.length);
-    });
-
-  fetchResume();
-});
+fetch("./data/resume.json")
+  .then((res) => res.json())
+  .then((data) => {
+    renderHero(data.hero);
+    renderSocialLinks(data.socialLinks);
+    renderAbout(data.about);
+    renderExperience(data.experience);
+    renderEducation(data.education);
+  })
+  .catch((err) => console.error("Failed to load resume:", err));
