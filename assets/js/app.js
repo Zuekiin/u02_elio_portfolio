@@ -32,26 +32,6 @@ function writeCache(data) {
   }
 }
 
-// Modal
-function showErrorModal() {
-  const modal = document.getElementById("error-modal");
-  if (!modal) return;
-  modal.hidden = false;
-
-  const close = () => {
-    modal.hidden = true;
-    document.removeEventListener("keydown", onKey);
-  };
-  const onKey = (e) => {
-    if (e.key === "Escape") close();
-  };
-
-  modal.querySelectorAll("[data-close]").forEach((el) => {
-    el.addEventListener("click", close, { once: true });
-  });
-  document.addEventListener("keydown", onKey);
-}
-
 // Fetch
 async function fetchProjects() {
   const cached = readCache();
@@ -75,6 +55,10 @@ async function fetchProjects() {
 
     const repos = await res.json();
     const selected = repos.filter((r) => wanted.includes(r.name));
+
+    if (selected.length === 0) {
+      throw new Error("GitHub returned no matching repos");
+    }
 
     const langResults = await Promise.all(
       selected.map((repo) =>
@@ -235,7 +219,7 @@ function showhide() {
   navBtn.addEventListener("click", () => {
     const isOpen = navContainer.classList.toggle("is-open");
     navBtn.classList.toggle("is-open", isOpen);
-    navBtn.setAttribute("aria-expanded", isOpen);
+    navBtn.setAttribute("aria-expanded", String(isOpen));
   });
 
   navContainer.querySelectorAll("a").forEach((link) => {

@@ -1,116 +1,85 @@
-# README – Portfolio för Pavan MG
+# README Portfolio (u02)
 
-**Publicerad sida:** [https://zuekiin.github.io/u01_elio_portfolio/]
+**Publicerad sida:** []
 
 ![Skärmdump av den färdiga sidan](./assets/img/screenshot-hero.png)
 
 ---
 
-## Från skiss till kod
+## Vad u02 lägger till
 
-Jag började med att dela upp skissen i sektioner: header, hero, about, tech stack, projects, contact och footer i den html semantik jag trodde skulle passa bäst för varje element.
-Sedan gick jag över till CSS.
-
-Det svåraste att översätta var **projektkorten**. Skissen visar sex kort där alla ska ha samma höjd oavsett innehållslängd. Jag löste det med `display: grid` på `.article-cards` och `grid-template-rows: subgrid` med `grid-row: span 5` på varje `article`. Inuti korten använde jag ytterligare en `subgrid` på `.article-content` med `grid-row: span 4`. Det gör att text, tech stack och footer hamnar på samma vertikala plats i alla kort utan JavaScript eller fasta höjder.
-
-Ett annat problem var **arbetserfarenhetskorten**. Där ville jag ha företagsnamn och plats på samma rad men med flexibla kolumnbredder. Jag använde `grid-template-columns: repeat(auto-fit, minmax(4rem, 1fr))` på `.grid-align`, och på små skärmar (max 561px) byter jag till `grid-template-columns: 1fr`.
-
-Jag jobbar med **nested CSS** för att hålla ihop struktur och stil. Istället för att skriva `.header .logo p` skriver jag `.logo { p { ... } }` inuti `.header`. Fördelen är att koden blir lättare att läsa och underhålla varje komponents stilar ligger samlade på ett ställe, och jag slipper långa selektorkedjor. Det gör också att jag kan flytta en komponent utan att behöva skriva om alla selektorer.
+u01 var en statisk sida byggd för hand. I u02 hämtas innehållet istället vid laddning: projekt från **GitHubs API** och CV-data från en **JSON-fil** jag skrivit själv. Sidan har också fått fungerande hamburgermeny, temaväxling som sparas, scroll-spy och en felmodal. HTML-stommen, semantiken och layouten från u01 ligger kvar  det är datan och interaktionen som är ny.
 
 ---
 
-## Semantik
+## Datans väg  ett GitHub-anrop från start till skärm
 
-Jag valde HTML-element utifrån innehållets betydelse:
+När sidan laddas körs `fetchProjects()`. Första steget är `readCache()`, som läser `localStorage` under nyckeln `portfolio_repos`. Finns ett objekt med `data` och `ts` och `Date.now() - cached.ts < TTL` (6 timmar) returneras cachen direkt  inget nätverkstanrop.
 
-- `<header>` för sidhuvudet med logotyp, navigation och dark mode-toggle.
-- `<nav>` för både huvudnavigation och sociala länkar, med `aria-label` för att skilja dem åt.
-- `<main>` för allt huvudinnehåll.
-- `<section>` för varje innehållsblock.
-- `<article>` för varje projektkort och arbetserfarenhet de är självständiga enheter.
-- `<figure>` runt projektbilderna.
-- `<time datetime="...">` för datumintervallen.
-- `<address>` för e-postadressen.
-- `<footer>` för sidfoten.
+Vid cache miss anropas `https://api.github.com/users/zuekiin/repos`. Svaret är en array av repobjekt med `name`, `html_url`, `description` m.m. Koden filtrerar med `wanted.includes(r.name)` så bara mina sex utvalda repon blir kvar. Språklistan finns inte i det svaret, så ett andra anrop görs per repo mot `/languages` med `Promise.all`. Varje sådant anrop fångas med `.catch(() => ({}))` så ett enskilt misslyckat språkanrop inte fäller hela kedjan.
 
-Jag landade i `<div>` där inget bättre fanns: `.mobile-nav`, `.nav-container`, `.card-content` och `.grid-align`. Dessa är rent layoutmässiga och har ingen semantisk betydelse.
+Resultatet mappas till `{ name, url, description, languages }`, sparas med `writeCache()` och skickas till `renderCards()`. Först där byggs DOM och något syns på skärmen. Ordningen är medveten: filtrera → berika → normalisera → rendera. Renderingen vet inget om GitHub, bara om det normaliserade objektet.
 
----
+## Två datakällor  varför de behandlas olika
 
-## Layout
+`resume.json` är *min* fil: samma origin, snabbt svar, format jag själv bestämt. Där läser jag fält rakt av (`data.hero.name`, `job.startDate`) och har bara `.catch()` för loggning.
 
-**Flexbox** använde jag där innehållet ska flöda i en riktning:
+GitHub är *någon annans* API: asynkront, kan rate-limitas (403), kan svara långsamt, och formatet råder jag inte över. Därför har projektflödet cache, tvåstegsanrop, stale-cache-fallback och modal. Jag behandlar källorna olika för att deras riskprofil är olika  inte för att koden är inkonsekvent.
 
-- `.header` – `justify-content: space-between`.
-- `.nav-links ul` och `.social-links ul` horisontella listor med `gap`.
-- `.hero-section` – text och bild sida vid sida.
-- `.card-content` – titel och badge.
+## DOM och händelser
 
-**Grid** använde jag där jag behövde tvådimensionell kontroll:
+Innehållet byggs genom att `container.innerHTML = ""` följt av `document.createElement("article")` och `appendChild`  jag rör aldrig befintlig markup, jag ersätter den. Händelser lyssnar jag på där de hör hemma:
 
-- `.article-cards` – `repeat(auto-fit, minmax(min(300px, 100%), 1fr))` skapar ett responsivt rutnät. `min(300px, 100%)` säkerställer att korten aldrig blir bredare än skärmen.
-- `.mystack-gallery` – `repeat(6, 1fr)` i desktop, `repeat(4, 1fr)` under 800px och `repeat(3, 1fr)` under 426px.
-- `.grid-align` – `repeat(auto-fit, minmax(4rem, 1fr))`.
-- `subgrid` – för att synka rader mellan korten.
+- `click` på `.hamburger-btn` togglar `is-open` på nav-containern och sätter `aria-expanded`.
+- `change` på `#toggleMode` byter tema och sparar valet.
+- `keydown` (Escape) stänger felmodalen.
+- `IntersectionObserver` med `rootMargin: "-40% 0px -55% 0px"` driver scroll-spy.
 
-Jag jobbar med **container/element-driven breakpoints** istället för globala brytpunkter. Varje komponent bryter när den behöver, baserat på sitt eget innehåll och sin egen layout inte vid en godtycklig skärmstorlek som delas av hela sidan. Fördelen är att varje komponent kan anpassas efter sina egna behov. Tech stack-galleriet bryter vid 800px för att ikonerna blir för små, medan headern bryter vid 921px för att navigation, dark mode och sociala länkar inte längre får plats på en rad. Arbetserfarenhetskorten bryter vid 561px för att texten annars radbryts fult. Istället för att tvinga in allt i samma brytpunkter låter jag varje komponent bestämma själv. Det gör sidan mer robust om jag ändrar en komponents innehåll behöver jag bara justera just den komponentens brytpunkt, inte hela sidans.
+Jag valde observer framför scroll-listener för att den bara rapporterar när en sektion korsar en linje, inte vid varje pixel. `scroll`-lyssnaren finns bara som komplement för att tvinga `#home` nära toppen.
 
----
+## Markup jag inte skrivit för hand
 
-## Tillgänglighet
+Eftersom `renderCards()` genererar HTML i template-strängar måste den vara semantisk på egen hand. Varje kort är ett `<article>` med `<figure>`, `<header><h3>`, `<p>` och `<footer>`  samma struktur som i u01, inte `<div>`-soppa. Bilden har `alt` satt till projektnamnet, `width`/`height` för att undvika layoutskift. Länkarna är riktiga `<a>` med `rel="noopener noreferrer"`, inte klickbara divs. Rubriknivån `h3` är vald för att passa under sektionens `h2`.
 
-- **Semantisk HTML** – skärmläsare kan navigera mellan sektioner, artiklar och navigation.
-- **ARIA-attribut** – `aria-label` på hamburgarmenyn, `aria-expanded` och `aria-controls`.
-- **Alt-text** på profilbilden och projektbilderna.
-- **Fokus-visible** – `:focus-visible { outline-offset: 0.2rem; }` i `reset.css`.
-- **`prefers-color-scheme`** – via `color-scheme: light` och `light-dark()` fungerar sidan i både ljust och mörkt läge.
-- **`text-size-adjust: none`** – förhindrar att mobilwebbläsare förstorar texten.
-- **`overflow-wrap: break-word`** – förhindrar att långa ord spränger layouten.
+## Temaväxlingen
 
-Jag testade med och **Lighthouse**. Lighthouse gav 100 i Accessibility.
+Temat styrs av klassen `dark-mode` på `<html>` och CSS-variabler i `:root`. JavaScript sätter bara klassen och sparar valet i `localStorage`  det rör aldrig färgvärden. Hade jag satt färger direkt i JS hade varje ny komponent krävt en JS-ändring, `prefers-color-scheme` hade inte kunnat samverka, och CSS:en hade tappat sitt enda sanningsvärde. Nu räcker en klass för att byta allt.
 
-![Lighthouse-testresultat](./assets/img/screenshot-lighthouse.png)
+## När det inte går som tänkt
 
-**Vad som återstår:** Hamburgarmenyn är inte funktionell den visas men öppnar ingen meny. Jag skulle behöva JavaScript för att toggla en klass på navigationen.
+Tre lägen hanteras:
 
----
+- **Laddning:** korten renderas när datan är klar. Ingen skeleton visas än  en brist.
+- **Fel:** om `res.ok` är falskt och cache finns används *stale cache* med konsolvarning. Finns ingen cache kastas felet, `showErrorModal()` visar modal och `renderErrorCards()` ritar sex begripliga kort med texten "Projects unavailable".
+- **Tom lista:** om GitHub svarar 200 men inga `wanted`-namn matchar blir
+  `selected` tom. `fetchProjects()` kastar då ett fel innan något hunnit
+  cachas, så samma `catch`-kedja som vid nätverksfel används: finns stale
+  cache visas den, annars visas `showErrorModal()` och
+  `renderErrorCards(wanted.length)` ritar sex kort med "Projects
+  unavailable". Tomt svar behandlas alltså som ett fel, inte som ett lyckat
+  svar, och cachas aldrig.
 
-## Användbarhet
+Sidan fungerar alltså även om GitHub svarar långsamt eller inte alls, så länge det finns cache. Utan cache och utan nätverk får besökaren modalen istället för en trasig sida.
 
-Designen följer flera UX-principer:
+## Tillgänglighet  testat hela vägen
 
-- **Visuell hierarki** – stora rubriker och tydliga sektioner.
-- **Konsekvent layout** – samma maxbredd och spacing-system genom hela sidan.
-- **Återkoppling** – hover-effekter på länkar och dark mode-toggle.
-- **Mobil-layout** – responsiv layout.
+- **Tangentbord:** hela sidan går att tabba igenom i logisk ordning. Hamburgermenyn är en riktig `<button>` med `aria-expanded` och `aria-controls`, inte en div. Fokusmarkeringen kommer från `:focus-visible { outline-offset: 0.2rem; }` i `reset.css`.
+- **Genererad markup:** korten från `renderCards()` har samma rubrikhierarki och element som u01  `<article>`, `<figure>`, `<header>`, `<footer>`. Länkarna är `<a>`.
+- **Kontrast:** färgerna i `:root` är valda för WCAG AA i både ljust och mörkt läge.
+- **Modal:** stängs med Escape och `[data-close]`, `hidden`-attributet används istället för att bara dölja med CSS.
 
-Jag hade **gjort annorlunda**:
+Jag testade med Lighthouse och fick **100 i Accessibility, Performance, Best Practices och SEO**  skärmdumpar nedan.
 
-- Projektkortens höjd är beroende av `subgrid`, vilket fungerar bra i moderna webbläsare men kan vara svårt att förstå. Jag hade kunnat använda `align-items: stretch` på en flex-container istället.
-- Hamburgerikonen är inte animerad till ett kryss när menyn är öppen en vanlig UX-detalj jag skulle lägga till.
-
----
+![Lighthouse-resultat](./assets/img/screenshot-lighthouse.png)
+![Felmodal när GitHub inte svarar](./assets/img/screenshot-modal.png)
+![Kort renderade från GitHub](./assets/img/screenshot-cards.png)
 
 ## Styrkor och brister
 
-**Styrkor:**
+**Styrkor:** felkedjan cache → färskt anrop → stale cache → modal, att språkanropen är isolerade per repo, att temaväxlingen bara rör en klass, och att genererad markup är lika semantisk som den handskrivna.
 
-- Den container/element-drivna brytpunktsfilosofin gör att varje komponent känns genomtänkt för flera skärmar.
-- Användningen av `subgrid` för projektkorten löser ett klassiskt problem med ojämna kort.
-- CSS-variablerna i `:root` gör färger, spacing typografi konsekventa.
-- Semantisk HTML med genomtänkta elementval.
-
-**Brister:**
-
-- Hamburgarmenyn är inte funktionell.
-- Dark mode-toggle använder en checkbox-hack som fungerar men inte är den mest robusta lösningen.
-
-**Med mer tid** skulle jag bygga om hamburgarmenyn med JavaScript vilket kommer i nästa uppgift.
-
----
+**Brister:** Alla sex korten får samma src, bara alt skiljer sig. Besökaren kan inte se skillnad på projekten visuellt, och alt blir missvisande eftersom bilden inte föreställer projektet. En brist i både UX och tillgänglighet då github inte har några bra bilder för projekten.
 
 ## AI-verktyg
 
-Jag använde AI för att **felsöka `subgrid`** – AI förklarade hur `grid-template-rows: subgrid` fungerar och varför det löser höjdproblemet. Jag fick en tydlig förklaring och kunde sedan applicera det själv i koden.
-
-Det negativa var att AI ville använda **globala brytpunkter** (768px, 1024px). Jag bytte till container/element-drivna brytpunkter baserat på innehållet, eftersom globala brytpunkter inte tar hänsyn till att olika komponenter har olika behov.
+Jag använde AI för att strukturera cache/TTL-logiken. Det jag ändrade: AI föreslog globala brytpunkter och en enklare felhantering som bara loggade. Jag bytte till elementdrivna brytpunkter och byggde ut felkedjan med stale cache och modal, eftersom ett tomt svar eller rate-limit annars lämnar besökaren utan förklaring. Jag granskade varje genererat block mot min egen kod innan jag behöll det.
