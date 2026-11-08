@@ -1,6 +1,6 @@
 # README Portfolio (u02)
 
-**Publicerad sida:** []
+**Publicerad sida:** [https://zuekiin.github.io/u02_elio_portfolio/#home]
 
 ![Skärmdump av den färdiga sidan](./assets/img/screenshot-hero.png)
 
